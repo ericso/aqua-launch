@@ -1,0 +1,88 @@
+[gd_scene load_steps=13 format=3 uid="uid://c5kcupxvre0w6"]
+
+[ext_resource type="Script" uid="uid://dk05kjtjmeqw0" path="res://ripple.gd" id="1_b3hhm"]
+[ext_resource type="Texture2D" uid="uid://bm1owdy1vs202" path="res://ripple.png" id="2_lfj1i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0iq33"]
+atlas = ExtResource("2_lfj1i")
+region = Rect2(0, 0, 341, 341)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1a6ru"]
+atlas = ExtResource("2_lfj1i")
+region = Rect2(341, 0, 341, 341)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pcsk"]
+atlas = ExtResource("2_lfj1i")
+region = Rect2(682, 0, 341, 341)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wu283"]
+atlas = ExtResource("2_lfj1i")
+region = Rect2(0, 341, 341, 341)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lrso6"]
+atlas = ExtResource("2_lfj1i")
+region = Rect2(341, 341, 341, 341)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rjskx"]
+atlas = ExtResource("2_lfj1i")
+region = Rect2(682, 341, 341, 341)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yq8tp"]
+atlas = ExtResource("2_lfj1i")
+region = Rect2(0, 682, 341, 341)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vby1v"]
+atlas = ExtResource("2_lfj1i")
+region = Rect2(341, 682, 341, 341)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48pe2"]
+atlas = ExtResource("2_lfj1i")
+region = Rect2(682, 682, 341, 341)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_huefa"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0iq33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1a6ru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6pcsk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wu283")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lrso6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rjskx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yq8tp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vby1v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48pe2")
+}],
+"loop": false,
+"name": &"ripple",
+"speed": 5.0
+}]
+
+[node name="Ripple" type="Node2D"]
+script = ExtResource("1_b3hhm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_huefa")
+animation = &"ripple"
+autoplay = "ripple"

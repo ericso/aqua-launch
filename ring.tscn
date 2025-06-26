@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_jiui3"]
 radius = 292.32
 
-[node name="Ring" type="Area2D"]
+[node name="Ring" type="RigidBody2D" groups=["rings"]]
 script = ExtResource("1_ln3uk")
 
 [node name="Sprite" type="Sprite2D" parent="."]
