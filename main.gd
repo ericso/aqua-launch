@@ -7,14 +7,21 @@ var spawn_timer := 0.0
 
 # spawn rate of rings is dependent on the number of rings on screen
 # more rings on screen increases the spawn interval
-@export var spawn_interval := 0.1 # default spawn rate in seconds
-@export var base_interval := 0.1
-@export var interval_per_ring := 0.5
-@export var max_interval := 1.0
+@export var spawn_interval := 0.05 # default spawn rate in seconds
+@export var base_interval := 0.05
+@export var interval_per_ring := 0.1
+@export var max_interval := 0.5
 
 @export var nudge_force = 50000
 var min_nudge_force = 100
 var max_nudge_force = nudge_force / 3
+
+func _ready():
+	var basket = preload("res://basket.tscn").instantiate()
+	basket.position = get_viewport_rect().size / 2 + Vector2(0, 350)
+	basket.basket_scale = 0.3
+	basket.connect("ring_collected", Callable(self, "_on_ring_collected"))
+	add_child(basket)
 
 func _process(delta: float) -> void:
 	spawn_timer += delta
@@ -39,7 +46,7 @@ func spawn_ring():
 	var ring = ring_scene.instantiate()
 	var x_pos = randf_range(50, 670) # Avoid edges of 720px wide screen
 	ring.position = Vector2(x_pos, -100)
-	ring.ring_scale = 0.1
+	ring.ring_scale = 0.08
 	add_child(ring)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -61,3 +68,7 @@ func apply_wave_impulse(tap_pos: Vector2) -> void:
 				continue
 			var force = clamp(nudge_force / distance, min_nudge_force, max_nudge_force)  # Inverse falloff
 			ring.apply_impulse(dir.normalized() * force)
+
+func _on_ring_collected() -> void:
+	ScoreManager.add_score(1)
+	$UI/Score.text = "Score: %d" % ScoreManager.get_score()
