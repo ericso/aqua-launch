@@ -10,11 +10,9 @@ radius = 292.32
 script = ExtResource("1_ln3uk")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_jiui3")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-scale = Vector2(0.25, 0.25)
 shape = SubResource("CircleShape2D_jiui3")
 metadata/_edit_group_ = true
