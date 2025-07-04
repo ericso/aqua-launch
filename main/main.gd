@@ -61,9 +61,18 @@ func _on_ring_collected() -> void:
 
 # _on_mine_hit is the handler for when a mine collides with the basket
 # A mine hit should do two things: decrease the score and do damage to the basket
-func _on_mine_hit() -> void:
+func _on_mine_hit(mine: Node2D) -> void:
 	if game_active:
+		# score go down
 		ScoreManager.decrement_score(1)
+		
+		# explosion
+		var explosion = preload("res://explosion/explosion.tscn").instantiate()
+		get_tree().current_scene.add_child(explosion)
+		# offset the explosion to be above the mine
+		explosion.global_position = mine.global_position + Vector2(0, -50)
+		
+		# damage basket
 		if basket:
 			basket.apply_damage(20)
 	

@@ -23,6 +23,7 @@ func apply_damage(amount: int):
 	if health <= 0:
 		die()
 
+# TODO this doesn't work yet
 func die():
 	# Trigger game over
 	get_tree().call_group("ui", "show_game_over")  # or emit signal
