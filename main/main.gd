@@ -6,6 +6,12 @@ extends Node2D
 var min_nudge_force = 100
 var max_nudge_force = nudge_force / 3
 
+# the game ends when end_score is reached
+var end_score = 5
+
+# flag indicating whether or not the game is active
+var game_active := false
+
 func _ready():
 	$UI/NewGameButton.pressed.connect(_on_new_game_pressed)
 	
@@ -24,8 +30,6 @@ func apply_wave_impulse(tap_pos: Vector2) -> void:
 	ripple.global_position = tap_pos
 	add_child(ripple)
 	
-	# TODO remove after testing
-	print("Tap at: ", tap_pos)
 	for ring in get_tree().get_nodes_in_group("rings"):
 		if ring is RigidBody2D:
 			var dir = ring.global_position - tap_pos
@@ -38,26 +42,26 @@ func apply_wave_impulse(tap_pos: Vector2) -> void:
 func _on_ring_collected() -> void:
 	ScoreManager.add_score(1)
 	$UI/Score.text = "Score: %d" % ScoreManager.get_score()
-
-var game_active := false
+	if ScoreManager.get_score() == end_score:
+		end_game()
 
 func _on_new_game_pressed():
 	game_active = true
 	ScoreManager.reset_score()
-	#clear_all_rings()
 	$RingSpawner.ring_spawn_timer = 0
 
 func end_game():
 	game_active = false
+	reset_game()
 
 func is_game_active() -> bool:
 	return game_active
 
-#func reset_game():
-	## Remove all existing rings
-	#for ring in get_tree().get_nodes_in_group("rings"):
-		#ring.queue_free()
-#
-	## Reset timer, spawn system, player state, etc.
-	#ScoreManager.reset_score()
-	#$UI/ScoreLabel.text = "Score: 0"
+func reset_game():
+	# Remove all existing rings
+	for ring in get_tree().get_nodes_in_group("rings"):
+		ring.queue_free()
+
+	# Reset timer, spawn system, player state, etc.
+	ScoreManager.reset_score()
+	$UI/Score.text = "Score: 0"
