@@ -40,19 +40,24 @@ func apply_wave_impulse(tap_pos: Vector2) -> void:
 			ring.apply_impulse(dir.normalized() * force)
 
 func _on_ring_collected() -> void:
-	ScoreManager.add_score(1)
+	if game_active:
+		ScoreManager.add_score(1)
+	
 	$UI/Score.text = "Score: %d" % ScoreManager.get_score()
 	if ScoreManager.get_score() == end_score:
 		end_game()
 
 func _on_new_game_pressed():
+	reset_game()
 	game_active = true
 	ScoreManager.reset_score()
 	$RingSpawner.ring_spawn_timer = 0
+	$UI/NewGameButton.visible = false
 
 func end_game():
 	game_active = false
-	reset_game()
+	$UI/NewGameButton.visible = true
+	
 
 func is_game_active() -> bool:
 	return game_active
