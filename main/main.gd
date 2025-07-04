@@ -4,7 +4,8 @@ extends Node2D
 
 @export var nudge_force = 50000
 var min_nudge_force = 100
-var max_nudge_force = nudge_force / 3
+var max_nudge_force = nudge_force / 3.0
+
 
 # TODO remove when done testing
 var end_score = 10
@@ -30,6 +31,7 @@ func apply_wave_impulse(tap_pos: Vector2) -> void:
 	ripple.global_position = tap_pos
 	add_child(ripple)
 	
+	# impulse rings
 	for ring in get_tree().get_nodes_in_group("rings"):
 		if ring is RigidBody2D:
 			var dir = ring.global_position - tap_pos
@@ -38,7 +40,18 @@ func apply_wave_impulse(tap_pos: Vector2) -> void:
 				continue
 			var force = clamp(nudge_force / distance, min_nudge_force, max_nudge_force)  # Inverse falloff
 			ring.apply_impulse(dir.normalized() * force)
+			
+	# impulse mines
+	for mine in get_tree().get_nodes_in_group("mines"):
+		if mine is RigidBody2D:
+			var dir = mine.global_position - tap_pos
+			var distance = dir.length()
+			if distance == 0:
+				continue
+			var force = clamp(nudge_force / distance, min_nudge_force, max_nudge_force)  # Inverse falloff
+			mine.apply_impulse(dir.normalized() * force)
 
+# TODO add mine collection and collision signals and handlers
 func _on_ring_collected() -> void:
 	if game_active:
 		ScoreManager.add_score(1)
@@ -52,12 +65,12 @@ func _on_new_game_pressed():
 	game_active = true
 	ScoreManager.reset_score()
 	$RingSpawner.ring_spawn_timer = 0
+	$MineSpawner.mine_spawn_timer = 0
 	$UI/NewGameButton.visible = false
 
 func end_game():
 	game_active = false
 	$UI/NewGameButton.visible = true
-	
 
 func is_game_active() -> bool:
 	return game_active

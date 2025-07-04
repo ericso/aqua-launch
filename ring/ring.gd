@@ -1,8 +1,8 @@
 extends RigidBody2D
 
-@export var floating_damp := 4 # damping to simulate water resistance
-
+@export var ring_floating_damp := 4 # damping to simulate water resistance
 @export var ring_scale: float = 1.0
+@export var ring_gravity_scale: float = 0.6
 
 var spawn_timer := 0.0
 
@@ -16,8 +16,8 @@ func _ready():
 	$CollisionShape.scale = Vector2.ONE * ring_scale
 	
 	# set the gravity
-	gravity_scale = 0.6
+	gravity_scale = ring_gravity_scale
 	
 	# set the gravity damping
-	linear_damp = floating_damp
-	angular_damp = floating_damp
+	linear_damp = ring_floating_damp
+	angular_damp = ring_floating_damp

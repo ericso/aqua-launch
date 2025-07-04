@@ -12,7 +12,7 @@ var ring_spawn_timer := 0.0
 @export var max_interval := 0.5
 
 func _process(delta: float) -> void:
-	# Ring spawning should happen only when told to by the game manager
+	# ring spawning should happen only when told to by the game manager
 	if not is_inside_tree() or not is_spawning():
 		return
 
@@ -41,6 +41,5 @@ func spawn_ring():
 	ring.ring_scale = 0.08
 	add_child(ring)
 
-# This is now *delegated* to the GameManager or Main.gd
 func is_spawning() -> bool:
 	return get_parent().has_method("is_game_active") and get_parent().is_game_active()
