@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bya2v3tqhkihn"]
+[gd_scene load_steps=7 format=3 uid="uid://bya2v3tqhkihn"]
 
-[ext_resource type="Script" uid="uid://d31mucsnqfk84" path="res://main.gd" id="1_0xm2m"]
-[ext_resource type="Texture2D" uid="uid://bglokeey7o5vi" path="res://underwater-background.png" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://d31mucsnqfk84" path="res://main/main.gd" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://bglokeey7o5vi" path="res://main/underwater-background.png" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://dghnoksxjh8y8" path="res://main/ring_spawner.gd" id="3_xwkvk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(8, 2000)
@@ -44,5 +45,16 @@ offset_bottom = 93.0
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_0xm2m")
 
+[node name="NewGameButton" type="Button" parent="UI"]
+offset_left = 210.0
+offset_top = 590.0
+offset_right = 510.0
+offset_bottom = 690.0
+theme_override_font_sizes/font_size = 30
+text = "New Game"
+
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(360, 640)
+
+[node name="RingSpawner" type="Node2D" parent="."]
+script = ExtResource("3_xwkvk")

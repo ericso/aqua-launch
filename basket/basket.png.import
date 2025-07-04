@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bglokeey7o5vi"
-path="res://.godot/imported/underwater-background.png-bf8cbe825be15c2d9bbc8c86b9d30575.ctex"
+uid="uid://bwtvfgyhk06vq"
+path="res://.godot/imported/basket.png-2d0ef6c75914b47dde541c9be122aad9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://underwater-background.png"
-dest_files=["res://.godot/imported/underwater-background.png-bf8cbe825be15c2d9bbc8c86b9d30575.ctex"]
+source_file="res://basket/basket.png"
+dest_files=["res://.godot/imported/basket.png-2d0ef6c75914b47dde541c9be122aad9.ctex"]
 
 [params]
 

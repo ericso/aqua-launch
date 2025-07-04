@@ -4,6 +4,8 @@ extends RigidBody2D
 
 @export var ring_scale: float = 1.0
 
+var spawn_timer := 0.0
+
 func _process(delta) -> void:
 	if position.y > 1400:
 		queue_free()

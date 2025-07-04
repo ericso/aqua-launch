@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dkrhg1qvmr68d"]
 
-[ext_resource type="Script" uid="uid://bexbk8vr8miiv" path="res://basket.gd" id="1_7qm31"]
-[ext_resource type="Texture2D" uid="uid://bwtvfgyhk06vq" path="res://basket.png" id="2_e01at"]
+[ext_resource type="Script" uid="uid://bexbk8vr8miiv" path="res://basket/basket.gd" id="1_7qm31"]
+[ext_resource type="Texture2D" uid="uid://bwtvfgyhk06vq" path="res://basket/basket.png" id="2_e01at"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e01at"]
 size = Vector2(729, 473)
