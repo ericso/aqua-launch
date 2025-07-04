@@ -127,6 +127,7 @@ animations = [{
 script = ExtResource("1_b3hhm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_7pap1")
 animation = &"ripple"
 frame = 15

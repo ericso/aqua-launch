@@ -6,8 +6,8 @@ extends Node2D
 var min_nudge_force = 100
 var max_nudge_force = nudge_force / 3
 
-# the game ends when end_score is reached
-var end_score = 5
+# TODO remove when done testing
+var end_score = 10
 
 # flag indicating whether or not the game is active
 var game_active := false
@@ -18,7 +18,7 @@ func _ready():
 	var basket = preload("res://basket/basket.tscn").instantiate()
 	basket.position = get_viewport_rect().size / 2 + Vector2(0, 350)
 	basket.basket_scale = 0.3
-	basket.connect("ring_collected", Callable(self, "_on_ring_collected"))
+	basket.get_node("BasketMouth").connect("ring_collected", Callable(self, "_on_ring_collected"))
 	add_child(basket)
 
 func _unhandled_input(event: InputEvent) -> void:

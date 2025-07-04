@@ -7,6 +7,8 @@
 radius = 292.32
 
 [node name="Ring" type="RigidBody2D" groups=["rings"]]
+z_index = 1
+collision_mask = 3
 script = ExtResource("1_ln3uk")
 
 [node name="Sprite" type="Sprite2D" parent="."]
