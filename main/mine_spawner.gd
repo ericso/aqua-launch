@@ -42,9 +42,6 @@ func spawn_mine():
 	mine.position = Vector2(x_pos, -100)
 	mine.mine_scale = 0.08
 	
-	# TODO remove
-	#mine.connect("mine_hit", Callable(self, "_on_mine_hit"))
-	
 	add_child(mine)
 
 func is_spawning() -> bool:
