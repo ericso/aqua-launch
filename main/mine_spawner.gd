@@ -41,6 +41,10 @@ func spawn_mine():
 	var x_pos = randf_range(50, 670) # Avoid edges of 720px wide screen
 	mine.position = Vector2(x_pos, -100)
 	mine.mine_scale = 0.08
+	
+	# TODO remove
+	#mine.connect("mine_hit", Callable(self, "_on_mine_hit"))
+	
 	add_child(mine)
 
 func is_spawning() -> bool:

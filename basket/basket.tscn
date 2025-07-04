@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dkrhg1qvmr68d"]
+[gd_scene load_steps=6 format=3 uid="uid://dkrhg1qvmr68d"]
 
 [ext_resource type="Script" uid="uid://bexbk8vr8miiv" path="res://basket/basket.gd" id="1_7qm31"]
 [ext_resource type="Texture2D" uid="uid://bwtvfgyhk06vq" path="res://basket/basket.png" id="2_e01at"]
 [ext_resource type="Script" uid="uid://cg2gglh2w3qi6" path="res://basket/basket_mouth.gd" id="3_c3bbt"]
+[ext_resource type="Script" uid="uid://b6sj3btuqco6b" path="res://basket/mine_sensor.gd" id="4_xjecv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p5qmi"]
 radius = 161.199
@@ -26,3 +27,22 @@ shape = SubResource("CircleShape2D_p5qmi")
 
 [node name="CollisionShape" type="CollisionPolygon2D" parent="BasketBody"]
 polygon = PackedVector2Array(333, 9, 284, 251, 190, 296, 1, 312, -140, 307, -289, 266, -351, -54, -246, -10, -132, 11, -3, 14, 156, 7, 351, -49)
+
+[node name="MineSensor" type="Area2D" parent="BasketBody"]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("4_xjecv")
+
+[node name="CollisionShape" type="CollisionPolygon2D" parent="BasketBody/MineSensor"]
+polygon = PackedVector2Array(215, -7, 349, -57, 287, 253, 187, 298, 1, 313, -136, 307, -231, 284, -289, 262, -351, -53, -248, -8, -112, 10, 4, 15, 134, 8)
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+z_index = 20
+offset_left = -140.0
+offset_top = 120.0
+offset_right = 160.0
+offset_bottom = 154.0
+step = 1.0
+value = 100.0
+fill_mode = 1
+show_percentage = false

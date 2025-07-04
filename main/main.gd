@@ -6,21 +6,22 @@ extends Node2D
 var min_nudge_force = 100
 var max_nudge_force = nudge_force / 3.0
 
-
-# TODO remove when done testing
-var end_score = 10
-
 # flag indicating whether or not the game is active
 var game_active := false
+
+var basket: Node = null
 
 func _ready():
 	$UI/NewGameButton.pressed.connect(_on_new_game_pressed)
 	
-	var basket = preload("res://basket/basket.tscn").instantiate()
+	basket = preload("res://basket/basket.tscn").instantiate()
 	basket.position = get_viewport_rect().size / 2 + Vector2(0, 350)
 	basket.basket_scale = 0.3
 	basket.get_node("BasketMouth").connect("ring_collected", Callable(self, "_on_ring_collected"))
 	add_child(basket)
+	
+	# connect the mine_hit signal
+	basket.get_node("BasketBody/MineSensor").connect("mine_hit", Callable(self, "_on_mine_hit"))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch and event.pressed:
@@ -51,14 +52,25 @@ func apply_wave_impulse(tap_pos: Vector2) -> void:
 			var force = clamp(nudge_force / distance, min_nudge_force, max_nudge_force)  # Inverse falloff
 			mine.apply_impulse(dir.normalized() * force)
 
-# TODO add mine collection and collision signals and handlers
+# _on_ring_collected is the handler for when the basket collects a ring
 func _on_ring_collected() -> void:
 	if game_active:
 		ScoreManager.add_score(1)
 	
 	$UI/Score.text = "Score: %d" % ScoreManager.get_score()
-	if ScoreManager.get_score() == end_score:
-		end_game()
+
+# _on_mine_hit is the handler for when a mine collides with the basket
+# A mine hit should do two things: decrease the score and do damage to the basket
+func _on_mine_hit() -> void:
+	# TODO remove after debugging
+	print("DEBUG: _on_mine_hit")
+	
+	if game_active:
+		ScoreManager.decrement_score(1)
+		if basket:
+			basket.apply_damage(20)
+	
+	$UI/Score.text = "Score: %d" % ScoreManager.get_score()
 
 func _on_new_game_pressed():
 	reset_game()

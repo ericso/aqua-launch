@@ -5,6 +5,9 @@ var score: int = 0
 func add_score(amount: int = 1) -> void:
 	score += amount
 
+func decrement_score(amount: int = 1) -> void:
+	score -= amount
+
 func reset_score() -> void:
 	score = 0
 
