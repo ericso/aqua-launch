@@ -1,0 +1,82 @@
+[gd_scene load_steps=13 format=3 uid="uid://drd0ossryv0lb"]
+
+[ext_resource type="Script" uid="uid://dc642sldll1it" path="res://ring/twinkle/twinkle.gd" id="1_xgss6"]
+[ext_resource type="Texture2D" uid="uid://cofyrv6u6qhbk" path="res://ring/twinkle/twinkle.png" id="2_iy613"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aobhk"]
+atlas = ExtResource("2_iy613")
+region = Rect2(0, 0, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_srw1u"]
+atlas = ExtResource("2_iy613")
+region = Rect2(400, 0, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3d1y5"]
+atlas = ExtResource("2_iy613")
+region = Rect2(800, 0, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_od6h8"]
+atlas = ExtResource("2_iy613")
+region = Rect2(0, 400, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y35ed"]
+atlas = ExtResource("2_iy613")
+region = Rect2(400, 400, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0chgn"]
+atlas = ExtResource("2_iy613")
+region = Rect2(800, 400, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cn217"]
+atlas = ExtResource("2_iy613")
+region = Rect2(0, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j26es"]
+atlas = ExtResource("2_iy613")
+region = Rect2(400, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rcgl"]
+atlas = ExtResource("2_iy613")
+region = Rect2(800, 800, 400, 400)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iy613"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aobhk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srw1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3d1y5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_od6h8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y35ed")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0chgn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cn217")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j26es")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rcgl")
+}],
+"loop": false,
+"name": &"twinkle",
+"speed": 30.0
+}]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_xgss6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_iy613")
+animation = &"twinkle"

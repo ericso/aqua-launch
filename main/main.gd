@@ -63,7 +63,12 @@ func apply_wave_impulse(tap_pos: Vector2) -> void:
 			mine.apply_impulse(dir.normalized() * force)
 
 # _on_ring_collected is the handler for when the basket collects a ring
-func _on_ring_collected() -> void:
+func _on_ring_collected(ring: Node2D) -> void:
+	# twinkle should animate regardless of game in progress
+	var twinkle = preload("res://ring/twinkle/twinkle.tscn").instantiate()
+	get_tree().current_scene.add_child(twinkle)
+	twinkle.global_position = ring.global_position
+	
 	if game_active:
 		ScoreManager.add_score(1)
 	
@@ -73,10 +78,10 @@ func _on_ring_collected() -> void:
 # A mine hit should do two things: decrease the score and do damage to the basket
 func _on_mine_hit(mine: Node2D) -> void:
 	# explosion should always happen on hit, whether or not game is running
-	var explosion = preload("res://explosion/explosion.tscn").instantiate()
+	var explosion = preload("res://mine/explosion/explosion.tscn").instantiate()
 	get_tree().current_scene.add_child(explosion)
 	# offset the explosion to be above the mine
-	explosion.global_position = mine.global_position + Vector2(0, -50)
+	explosion.global_position = mine.global_position + Vector2(0, -100)
 		
 	if game_active:
 		# score go down

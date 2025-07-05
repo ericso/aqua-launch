@@ -6,7 +6,7 @@ extends RigidBody2D
 
 var spawn_timer := 0.0
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	if position.y > 1400:
 		queue_free()
 
