@@ -14,6 +14,10 @@ var basket: Node = null
 # the amount of damage a mine does to the basket
 var mine_damage: float = 5.0
 
+# rings_deducted is the amount of rings deducted from the score when a mine hits
+# the basket
+var rings_deducted: int = 0
+
 func _ready():
 	$UI/NewGameButton.pressed.connect(_on_new_game_pressed)
 	
@@ -76,7 +80,7 @@ func _on_mine_hit(mine: Node2D) -> void:
 		
 	if game_active:
 		# score go down
-		ScoreManager.decrement_score(1)
+		ScoreManager.decrement_score(rings_deducted)
 		
 		# damage basket
 		if basket:
