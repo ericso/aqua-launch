@@ -100,9 +100,11 @@ func _on_new_game_pressed():
 	$RingSpawner.ring_spawn_timer = 0
 	$MineSpawner.mine_spawn_timer = 0
 	$UI/NewGameButton.visible = false
+	$BackgroundMusic.volume_db = +10  # raise background music volume by 10dB
 
 func _on_game_over():
 	end_game()
+	$BackgroundMusic.volume_db = -10  # raise background music volume by 10dB
 	
 func end_game():
 	game_active = false

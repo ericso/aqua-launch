@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bya2v3tqhkihn"]
+[gd_scene load_steps=9 format=3 uid="uid://bya2v3tqhkihn"]
 
 [ext_resource type="Script" uid="uid://d31mucsnqfk84" path="res://main/main.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://bglokeey7o5vi" path="res://main/underwater-background.png" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://dghnoksxjh8y8" path="res://main/ring_spawner.gd" id="3_xwkvk"]
 [ext_resource type="Script" uid="uid://b4xgw5pahk8vu" path="res://main/mine_spawner.gd" id="4_c651c"]
+[ext_resource type="AudioStream" uid="uid://byd3w22qp4cw7" path="res://music/gameplay.mp3" id="5_3wy1v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(8, 2000)
@@ -62,3 +63,8 @@ script = ExtResource("3_xwkvk")
 
 [node name="MineSpawner" type="Node2D" parent="."]
 script = ExtResource("4_c651c")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_3wy1v")
+autoplay = true
+parameters/looping = true
