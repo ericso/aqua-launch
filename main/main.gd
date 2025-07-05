@@ -11,6 +11,9 @@ var game_active := false
 
 var basket: Node = null
 
+# the amount of damage a mine does to the basket
+var mine_damage: float = 5.0
+
 func _ready():
 	$UI/NewGameButton.pressed.connect(_on_new_game_pressed)
 	
@@ -22,6 +25,9 @@ func _ready():
 	
 	# connect the mine_hit signal
 	basket.get_node("BasketBody/MineSensor").connect("mine_hit", Callable(self, "_on_mine_hit"))
+	
+	# connect the game_over signal
+	basket.connect("game_over", Callable(self, "_on_game_over"))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch and event.pressed:
@@ -62,19 +68,19 @@ func _on_ring_collected() -> void:
 # _on_mine_hit is the handler for when a mine collides with the basket
 # A mine hit should do two things: decrease the score and do damage to the basket
 func _on_mine_hit(mine: Node2D) -> void:
+	# explosion should always happen on hit, whether or not game is running
+	var explosion = preload("res://explosion/explosion.tscn").instantiate()
+	get_tree().current_scene.add_child(explosion)
+	# offset the explosion to be above the mine
+	explosion.global_position = mine.global_position + Vector2(0, -50)
+		
 	if game_active:
 		# score go down
 		ScoreManager.decrement_score(1)
 		
-		# explosion
-		var explosion = preload("res://explosion/explosion.tscn").instantiate()
-		get_tree().current_scene.add_child(explosion)
-		# offset the explosion to be above the mine
-		explosion.global_position = mine.global_position + Vector2(0, -50)
-		
 		# damage basket
 		if basket:
-			basket.apply_damage(20)
+			basket.apply_damage(mine_damage)
 	
 	$UI/Score.text = "Score: %d" % ScoreManager.get_score()
 
@@ -86,6 +92,9 @@ func _on_new_game_pressed():
 	$MineSpawner.mine_spawn_timer = 0
 	$UI/NewGameButton.visible = false
 
+func _on_game_over():
+	end_game()
+	
 func end_game():
 	game_active = false
 	$UI/NewGameButton.visible = true
@@ -94,10 +103,17 @@ func is_game_active() -> bool:
 	return game_active
 
 func reset_game():
-	# Remove all existing rings
+	# remove all existing rings
 	for ring in get_tree().get_nodes_in_group("rings"):
 		ring.queue_free()
-
-	# Reset timer, spawn system, player state, etc.
+	
+	# remove all existing mines
+	for ring in get_tree().get_nodes_in_group("mines"):
+		ring.queue_free()
+	
+	# reset score
 	ScoreManager.reset_score()
 	$UI/Score.text = "Score: 0"
+	
+	# reset basket health
+	basket.reset_health()
