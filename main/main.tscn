@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bya2v3tqhkihn"]
+[gd_scene load_steps=14 format=3 uid="uid://bya2v3tqhkihn"]
 
 [ext_resource type="Script" uid="uid://d31mucsnqfk84" path="res://main/main.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://bglokeey7o5vi" path="res://main/underwater-background.png" id="1_ig7tw"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://cdsntuguie7kp" path="res://audio/effects/coin.ogg" id="7_4dugh"]
 [ext_resource type="AudioStream" uid="uid://0kdsk21yqtaw" path="res://audio/effects/game-start.ogg" id="8_67ri8"]
 [ext_resource type="AudioStream" uid="uid://cpd133u5qypyp" path="res://audio/effects/game-over.ogg" id="9_grrlh"]
+[ext_resource type="AudioStream" uid="uid://bpaq3b40b6oxg" path="res://audio/effects/splash.ogg" id="10_0i4oc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(8, 2000)
@@ -87,4 +88,8 @@ volume_db = 20.0
 
 [node name="GameOverFx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_grrlh")
+volume_db = 10.0
+
+[node name="WaterSplashFx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_0i4oc")
 volume_db = 10.0

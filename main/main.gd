@@ -42,6 +42,9 @@ func apply_wave_impulse(tap_pos: Vector2) -> void:
 	ripple.global_position = tap_pos
 	add_child(ripple)
 	
+	# sound fx
+	$WaterSplashFx.play()
+	
 	# impulse rings
 	for ring in get_tree().get_nodes_in_group("rings"):
 		if ring is RigidBody2D:
