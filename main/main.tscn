@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bya2v3tqhkihn"]
+[gd_scene load_steps=13 format=3 uid="uid://bya2v3tqhkihn"]
 
 [ext_resource type="Script" uid="uid://d31mucsnqfk84" path="res://main/main.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://bglokeey7o5vi" path="res://main/underwater-background.png" id="1_ig7tw"]
@@ -7,6 +7,8 @@
 [ext_resource type="AudioStream" uid="uid://cef7frtvo4j67" path="res://audio/music/gameplay.ogg" id="5_3wy1v"]
 [ext_resource type="AudioStream" uid="uid://45xvaibwxe4" path="res://audio/effects/explosion.ogg" id="6_kfbq2"]
 [ext_resource type="AudioStream" uid="uid://cdsntuguie7kp" path="res://audio/effects/coin.ogg" id="7_4dugh"]
+[ext_resource type="AudioStream" uid="uid://0kdsk21yqtaw" path="res://audio/effects/game-start.ogg" id="8_67ri8"]
+[ext_resource type="AudioStream" uid="uid://cpd133u5qypyp" path="res://audio/effects/game-over.ogg" id="9_grrlh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(8, 2000)
@@ -77,4 +79,12 @@ volume_db = 10.0
 
 [node name="CoinFx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_4dugh")
+volume_db = 10.0
+
+[node name="GameStartFx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_67ri8")
+volume_db = 20.0
+
+[node name="GameOverFx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_grrlh")
 volume_db = 10.0
