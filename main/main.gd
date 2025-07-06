@@ -82,7 +82,10 @@ func _on_mine_hit(mine: Node2D) -> void:
 	get_tree().current_scene.add_child(explosion)
 	# offset the explosion to be above the mine
 	explosion.global_position = mine.global_position + Vector2(0, -100)
-		
+	
+	# play the sound effect
+	$ExplosionFx.play()
+	
 	if game_active:
 		# score go down
 		ScoreManager.decrement_score(rings_deducted)
