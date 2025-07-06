@@ -69,6 +69,9 @@ func _on_ring_collected(ring: Node2D) -> void:
 	get_tree().current_scene.add_child(twinkle)
 	twinkle.global_position = ring.global_position
 	
+	# play the sound effect
+	$CoinFx.play()
+	
 	if game_active:
 		ScoreManager.add_score(1)
 	
