@@ -25,7 +25,7 @@ script = ExtResource("1_0xm2m")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(361, 638.5)
-scale = Vector2(0.7, 1.05)
+scale = Vector2(0.7, 0.85)
 texture = ExtResource("1_ig7tw")
 
 [node name="Walls" type="Node2D" parent="."]
@@ -45,10 +45,10 @@ shape = SubResource("RectangleShape2D_h2yge")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Score" type="Label" parent="UI"]
-offset_left = 36.0
-offset_top = 118.0
-offset_right = 160.0
-offset_bottom = 180.0
+offset_left = 69.0
+offset_top = 59.0
+offset_right = 193.0
+offset_bottom = 121.0
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_0xm2m")
 
