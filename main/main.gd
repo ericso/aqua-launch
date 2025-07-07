@@ -1,15 +1,12 @@
 extends Node2D
 
 @onready var ripple_scene = preload("res://ripple/ripple.tscn")
+var basket: Node = null
 
+# nudge vars
 @export var nudge_force = 50000
 var min_nudge_force = 100
 var max_nudge_force = nudge_force / 3.0
-
-# flag indicating whether or not the game is active
-var game_active := false
-
-var basket: Node = null
 
 # the amount of damage a mine does to the basket
 var mine_damage: float = 5.0
@@ -17,6 +14,13 @@ var mine_damage: float = 5.0
 # rings_deducted is the amount of rings deducted from the score when a mine hits
 # the basket
 var rings_deducted: int = 0
+
+var touch_start := Vector2.ZERO
+var touch_end := Vector2.ZERO
+var swipe_min_distance := 50.0 # Minimum distance to count as swipe
+		
+# flag indicating whether or not the game is active
+var game_active := false
 
 func _ready():
 	$UI/NewGameButton.pressed.connect(_on_new_game_pressed)
@@ -34,9 +38,16 @@ func _ready():
 	basket.connect("game_over", Callable(self, "_on_game_over"))
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventScreenTouch and event.pressed:
-		apply_wave_impulse(event.position)
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			apply_wave_impulse(event.position)
+		else:
+			touch_end = event.position
+			var delta = touch_end - touch_start
+			if delta.length() >= swipe_min_distance:
+				emit_swipe_impulse(touch_start, delta.normalized())
 
+# apply_wave_impulse emits an impulse at the input position on the screen
 func apply_wave_impulse(tap_pos: Vector2) -> void:
 	var ripple = ripple_scene.instantiate()
 	ripple.global_position = tap_pos
@@ -64,6 +75,30 @@ func apply_wave_impulse(tap_pos: Vector2) -> void:
 				continue
 			var force = clamp(nudge_force / distance, min_nudge_force, max_nudge_force)  # Inverse falloff
 			mine.apply_impulse(dir.normalized() * force)
+
+# emit_swipe_impulse emits an impulse in a cone at the terminus of a swipe
+func emit_swipe_impulse(origin: Vector2, direction: Vector2):
+	var cone_angle = deg_to_rad(45)
+	var cone_radius = 200.0
+
+	var query := PhysicsPointQueryParameters2D.new()
+	query.position = origin
+	query.collision_mask = 1
+	query.collide_with_bodies = true
+	query.collide_with_areas = false
+
+	var space_state = get_world_2d().direct_space_state
+	var result = space_state.intersect_point(query, 32)
+
+	for hit in result:
+		var body = hit.collider
+		if body is RigidBody2D:
+			var to_body = body.global_position - origin
+			var distance = to_body.length()
+			if distance <= cone_radius:
+				var angle_to_body = direction.angle_to(to_body.normalized())
+				if abs(angle_to_body) <= cone_angle / 2:
+					body.apply_impulse(Vector2.ZERO, direction * 500)
 
 # _on_ring_collected is the handler for when the basket collects a ring
 func _on_ring_collected(ring: Node2D) -> void:
@@ -139,3 +174,7 @@ func reset_game():
 	
 	# reset basket health
 	basket.reset_health()
+
+# DEBUG to visualize swipe
+#func _draw():
+	#draw_line(touch_start, touch_end, Color.green, 2.0)
