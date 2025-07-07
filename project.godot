@@ -22,7 +22,7 @@ ScoreManager="*res://main/ScoreManager.gd"
 [display]
 
 window/size/viewport_width=720
-window/size/viewport_height=1280
+window/size/viewport_height=1440
 window/size/always_on_top=true
 window/stretch/mode="viewport"
 
