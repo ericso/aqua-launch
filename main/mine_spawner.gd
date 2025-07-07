@@ -45,4 +45,4 @@ func spawn_mine():
 	add_child(mine)
 
 func is_spawning() -> bool:
-	return get_parent().has_method("is_game_active") and get_parent().is_game_active()
+	return GameManager.is_game_active()

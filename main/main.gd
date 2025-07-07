@@ -25,12 +25,12 @@ var is_swiping := false
 var swipe_threshold := 50.0 # minimum distance (in pixels?) to count as a swipe
 var impulse_multiplier = 1500 # changes how much impulse is applied on a swipe
 
-# flag indicating whether or not the game is active
-var game_active := false
-
 func _ready():
 	$UI/NewGameButton.pressed.connect(_on_new_game_pressed)
 	$UI/Score.visible = false
+	$UI/GameOver.visible = false
+	$UI/FinalScore.visible = false
+	$UI/MinesHit.visible = false
 	
 	basket = preload("res://basket/basket.tscn").instantiate()
 	basket.position = get_viewport_rect().size / 2 + Vector2(0, 350)
@@ -137,7 +137,7 @@ func _on_ring_collected(ring: Node2D) -> void:
 	# play the sound effect
 	$CoinFx.play()
 	
-	if game_active:
+	if GameManager.is_game_active():
 		ScoreManager.add_score(1)
 	
 	$UI/Score.text = "Score: %d" % ScoreManager.get_score()
@@ -155,7 +155,7 @@ func _on_mine_hit(mine: Node2D) -> void:
 	$ExplosionFx.play()
 	
 	# damage basket
-	if game_active and basket:
+	if GameManager.is_game_active() and basket:
 		basket.apply_damage(mine_damage)
 		ScoreManager.record_mine_hit(1)
 	
@@ -163,13 +163,12 @@ func _on_mine_hit(mine: Node2D) -> void:
 
 func _on_new_game_pressed():
 	reset_game()
-	game_active = true
+	GameManager.set_game_active(true)
 	$BackgroundMusic.volume_db = +5  # raise background music volume by 5dB
 	$GameStartFx.play() # play game start fx
 
 func _on_game_over():
-	# set the game active flag
-	game_active = false
+	GameManager.set_game_active(false)
 	
 	# set music volume and play game over sound fx
 	$BackgroundMusic.volume_db = -10
@@ -185,9 +184,6 @@ func _on_game_over():
 	$UI/GameOver.visible = true
 	$UI/MinesHit.visible = true
 	$UI/FinalScore.visible = true
-
-func is_game_active() -> bool:
-	return game_active
 
 func reset_game():
 	# remove all existing rings

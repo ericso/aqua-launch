@@ -21,6 +21,7 @@ config/icon="uid://co6w30xv6n5t8"
 [autoload]
 
 ScoreManager="*res://main/ScoreManager.gd"
+GameManager="*res://main/GameManager.gd"
 
 [display]
 
