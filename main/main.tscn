@@ -25,7 +25,7 @@ script = ExtResource("1_0xm2m")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(361, 638.5)
-scale = Vector2(0.7, 0.95)
+scale = Vector2(0.7, 1.05)
 texture = ExtResource("1_ig7tw")
 
 [node name="Walls" type="Node2D" parent="."]
@@ -46,17 +46,17 @@ shape = SubResource("RectangleShape2D_h2yge")
 
 [node name="Score" type="Label" parent="UI"]
 offset_left = 36.0
-offset_top = 31.0
+offset_top = 118.0
 offset_right = 160.0
-offset_bottom = 93.0
+offset_bottom = 180.0
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_0xm2m")
 
 [node name="NewGameButton" type="Button" parent="UI"]
 offset_left = 210.0
-offset_top = 590.0
+offset_top = 630.0
 offset_right = 510.0
-offset_bottom = 690.0
+offset_bottom = 730.0
 theme_override_font_sizes/font_size = 30
 text = "New Game"
 
