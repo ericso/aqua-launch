@@ -1,7 +1,7 @@
 [gd_scene load_steps=20 format=3 uid="uid://c5kcupxvre0w6"]
 
-[ext_resource type="Script" uid="uid://dk05kjtjmeqw0" path="res://ripple/ripple.gd" id="1_b3hhm"]
-[ext_resource type="Texture2D" uid="uid://cdw6v4q0400lw" path="res://ripple/ripple.png" id="2_lfj1i"]
+[ext_resource type="Script" uid="uid://dk05kjtjmeqw0" path="res://main/ripple/ripple.gd" id="1_b3hhm"]
+[ext_resource type="Texture2D" uid="uid://cdw6v4q0400lw" path="res://main/ripple/ripple.png" id="2_lfj1i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tdmov"]
 atlas = ExtResource("2_lfj1i")

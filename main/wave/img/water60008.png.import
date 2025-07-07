@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdw6v4q0400lw"
-path="res://.godot/imported/ripple.png-431c134361d76c54eb24da20e7f63de8.ctex"
+uid="uid://c7gcb6f2clers"
+path="res://.godot/imported/water60008.png-1000022957ed8743abfc276c81ec41f0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ripple/ripple.png"
-dest_files=["res://.godot/imported/ripple.png-431c134361d76c54eb24da20e7f63de8.ctex"]
+source_file="res://main/wave/img/water60008.png"
+dest_files=["res://.godot/imported/water60008.png-1000022957ed8743abfc276c81ec41f0.ctex"]
 
 [params]
 
