@@ -99,6 +99,13 @@ offset_bottom = 581.0
 text = "Final Score: 0"
 label_settings = SubResource("LabelSettings_fwcvl")
 
+[node name="CreditsButton" type="Button" parent="UI"]
+offset_left = 599.0
+offset_top = 28.0
+offset_right = 694.0
+offset_bottom = 59.0
+text = "Credits"
+
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(360, 640)
 

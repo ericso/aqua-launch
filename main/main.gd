@@ -27,6 +27,7 @@ var impulse_multiplier = 1500 # changes how much impulse is applied on a swipe
 
 func _ready():
 	$UI/NewGameButton.pressed.connect(_on_new_game_pressed)
+	$UI/CreditsButton.pressed.connect(_on_credits_button_pressed)
 	$UI/Score.visible = false
 	$UI/GameOver.visible = false
 	$UI/FinalScore.visible = false
@@ -164,11 +165,14 @@ func _on_mine_hit(mine: Node2D) -> void:
 func _on_new_game_pressed():
 	reset_game()
 	GameManager.set_game_active(true)
+	$UI/CreditsButton.visible = false
 	$BackgroundMusic.volume_db = +5  # raise background music volume by 5dB
 	$GameStartFx.play() # play game start fx
 
 func _on_game_over():
 	GameManager.set_game_active(false)
+	
+	$UI/CreditsButton.visible = true
 	
 	# set music volume and play game over sound fx
 	$BackgroundMusic.volume_db = -10
@@ -213,3 +217,6 @@ func reset_game():
 	
 	$RingSpawner.ring_spawn_timer = 0
 	$MineSpawner.mine_spawn_timer = 0
+
+func _on_credits_button_pressed():
+	get_tree().change_scene_to_file("res://credits/credits_screen.tscn")
