@@ -1,6 +1,8 @@
 extends Node2D
 
-@onready var ripple_scene = preload("res://ripple/ripple.tscn")
+@onready var ripple_animation = preload("res://main/ripple/ripple.tscn")
+@onready var wave_animation = preload("res://main/wave/wave.tscn")
+
 var basket: Node = null
 
 # nudge vars
@@ -66,7 +68,7 @@ func handle_tap(event: InputEvent) -> void:
 
 # apply_wave_impulse emits an impulse at the input position on the screen
 func apply_wave_impulse(tap_pos: Vector2) -> void:
-	var ripple = ripple_scene.instantiate()
+	var ripple = ripple_animation.instantiate()
 	ripple.global_position = tap_pos
 	add_child(ripple)
 	
@@ -95,6 +97,11 @@ func apply_wave_impulse(tap_pos: Vector2) -> void:
 
 # emit_swipe_impulse emits an impulse in a cone at the terminus of a swipe
 func emit_swipe_impulse(origin: Vector2, direction: Vector2):
+	var wave = wave_animation.instantiate()
+	wave.global_position = origin
+	wave.rotation = direction.angle() + deg_to_rad(90)
+	add_child(wave)
+	
 	var space_state = get_world_2d().direct_space_state
 
 	var shape := CircleShape2D.new()
