@@ -30,6 +30,7 @@ var game_active := false
 
 func _ready():
 	$UI/NewGameButton.pressed.connect(_on_new_game_pressed)
+	$UI/Score.visible = false
 	
 	basket = preload("res://basket/basket.tscn").instantiate()
 	basket.position = get_viewport_rect().size / 2 + Vector2(0, 350)
@@ -170,6 +171,7 @@ func _on_new_game_pressed():
 	$RingSpawner.ring_spawn_timer = 0
 	$MineSpawner.mine_spawn_timer = 0
 	$UI/NewGameButton.visible = false
+	$UI/Score.visible = true
 	$BackgroundMusic.volume_db = +5  # raise background music volume by 5dB
 	$GameStartFx.play() # play game start fx
 
@@ -181,6 +183,7 @@ func _on_game_over():
 func end_game():
 	game_active = false
 	$UI/NewGameButton.visible = true
+	$UI/Score.visible = false
 
 func is_game_active() -> bool:
 	return game_active
