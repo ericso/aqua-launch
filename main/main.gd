@@ -15,10 +15,14 @@ var mine_damage: float = 5.0
 # the basket
 var rings_deducted: int = 0
 
+# UI interactions
 var touch_start := Vector2.ZERO
 var touch_end := Vector2.ZERO
-var swipe_min_distance := 50.0 # Minimum distance to count as swipe
-		
+var swipe_start := Vector2.ZERO
+var is_swiping := false
+var swipe_threshold := 50.0 # minimum distance (in pixels?) to count as a swipe
+var impulse_multiplier = 1500 # changes how much impulse is applied on a swipe
+
 # flag indicating whether or not the game is active
 var game_active := false
 
@@ -38,14 +42,27 @@ func _ready():
 	basket.connect("game_over", Callable(self, "_on_game_over"))
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventScreenTouch:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
-			apply_wave_impulse(event.position)
+			swipe_start = event.position
+			is_swiping = false
 		else:
-			touch_end = event.position
-			var delta = touch_end - touch_start
-			if delta.length() >= swipe_min_distance:
-				emit_swipe_impulse(touch_start, delta.normalized())
+			if is_swiping:
+				# It was a swipe, do NOT count as tap
+				var swipe_end = event.position
+				var delta = swipe_end - swipe_start
+				emit_swipe_impulse(swipe_start, delta.normalized())
+			else:
+				# It's a tap
+				handle_tap(event)
+	elif event is InputEventMouseMotion and event.button_mask & MOUSE_BUTTON_MASK_LEFT:
+		var distance = event.position.distance_to(swipe_start)
+		if distance >= swipe_threshold:
+			is_swiping = true
+
+# handle_tap handles a single tap/click event
+func handle_tap(event: InputEvent) -> void:
+	apply_wave_impulse(event.position)
 
 # apply_wave_impulse emits an impulse at the input position on the screen
 func apply_wave_impulse(tap_pos: Vector2) -> void:
@@ -78,27 +95,26 @@ func apply_wave_impulse(tap_pos: Vector2) -> void:
 
 # emit_swipe_impulse emits an impulse in a cone at the terminus of a swipe
 func emit_swipe_impulse(origin: Vector2, direction: Vector2):
-	var cone_angle = deg_to_rad(45)
-	var cone_radius = 200.0
-
-	var query := PhysicsPointQueryParameters2D.new()
-	query.position = origin
-	query.collision_mask = 1
-	query.collide_with_bodies = true
-	query.collide_with_areas = false
-
 	var space_state = get_world_2d().direct_space_state
-	var result = space_state.intersect_point(query, 32)
 
-	for hit in result:
+	var shape := CircleShape2D.new()
+	shape.radius = 400.0
+
+	var params := PhysicsShapeQueryParameters2D.new()
+	params.shape = shape
+	params.transform = Transform2D.IDENTITY.translated(origin)
+	params.collide_with_bodies = true
+	params.collision_mask = 0xFFFF  # check all layers
+
+	var results = space_state.intersect_shape(params, 32)
+
+	for hit in results:
 		var body = hit.collider
 		if body is RigidBody2D:
-			var to_body = body.global_position - origin
-			var distance = to_body.length()
-			if distance <= cone_radius:
-				var angle_to_body = direction.angle_to(to_body.normalized())
-				if abs(angle_to_body) <= cone_angle / 2:
-					body.apply_impulse(Vector2.ZERO, direction * 500)
+			var to_body = (body.global_position - origin)
+			var angle = direction.angle_to(to_body.normalized())
+			if abs(angle) <= deg_to_rad(45) / 2:
+				body.apply_impulse(direction * impulse_multiplier)
 
 # _on_ring_collected is the handler for when the basket collects a ring
 func _on_ring_collected(ring: Node2D) -> void:
@@ -144,7 +160,7 @@ func _on_new_game_pressed():
 	$RingSpawner.ring_spawn_timer = 0
 	$MineSpawner.mine_spawn_timer = 0
 	$UI/NewGameButton.visible = false
-	$BackgroundMusic.volume_db = +10  # raise background music volume by 10dB
+	$BackgroundMusic.volume_db = +5  # raise background music volume by 5dB
 	$GameStartFx.play() # play game start fx
 
 func _on_game_over():
@@ -174,7 +190,3 @@ func reset_game():
 	
 	# reset basket health
 	basket.reset_health()
-
-# DEBUG to visualize swipe
-#func _draw():
-	#draw_line(touch_start, touch_end, Color.green, 2.0)
