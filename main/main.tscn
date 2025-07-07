@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bya2v3tqhkihn"]
+[gd_scene load_steps=17 format=3 uid="uid://bya2v3tqhkihn"]
 
 [ext_resource type="Script" uid="uid://d31mucsnqfk84" path="res://main/main.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://bglokeey7o5vi" path="res://main/underwater-background.png" id="1_ig7tw"]
@@ -18,6 +18,15 @@ size = Vector2(8, 2000)
 size = Vector2(8, 2000)
 
 [sub_resource type="LabelSettings" id="LabelSettings_0xm2m"]
+font_size = 45
+
+[sub_resource type="LabelSettings" id="LabelSettings_0i4oc"]
+font_size = 56
+
+[sub_resource type="LabelSettings" id="LabelSettings_bsumw"]
+font_size = 45
+
+[sub_resource type="LabelSettings" id="LabelSettings_fwcvl"]
 font_size = 45
 
 [node name="Main" type="Node2D"]
@@ -47,8 +56,8 @@ shape = SubResource("RectangleShape2D_h2yge")
 [node name="Score" type="Label" parent="UI"]
 offset_left = 69.0
 offset_top = 59.0
-offset_right = 289.0
-offset_bottom = 152.0
+offset_right = 316.0
+offset_bottom = 173.0
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_0xm2m")
 horizontal_alignment = 1
@@ -61,6 +70,34 @@ offset_right = 510.0
 offset_bottom = 730.0
 theme_override_font_sizes/font_size = 30
 text = "New Game"
+
+[node name="GameOver" type="Label" parent="UI"]
+offset_left = 79.0
+offset_top = 348.0
+offset_right = 645.0
+offset_bottom = 460.0
+text = "GAME OVER!"
+label_settings = SubResource("LabelSettings_0i4oc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MinesHit" type="Label" parent="UI"]
+offset_left = 232.0
+offset_top = 458.0
+offset_right = 487.0
+offset_bottom = 521.0
+text = "Mines Hit: 0"
+label_settings = SubResource("LabelSettings_bsumw")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FinalScore" type="Label" parent="UI"]
+offset_left = 219.0
+offset_top = 518.0
+offset_right = 504.0
+offset_bottom = 581.0
+text = "Final Score: 0"
+label_settings = SubResource("LabelSettings_fwcvl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(360, 640)

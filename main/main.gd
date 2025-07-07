@@ -154,36 +154,37 @@ func _on_mine_hit(mine: Node2D) -> void:
 	# play the sound effect
 	$ExplosionFx.play()
 	
-	if game_active:
-		# score go down
-		ScoreManager.decrement_score(rings_deducted)
-		
-		# damage basket
-		if basket:
-			basket.apply_damage(mine_damage)
+	# damage basket
+	if game_active and basket:
+		basket.apply_damage(mine_damage)
+		ScoreManager.record_mine_hit(1)
 	
 	$UI/Score.text = "Score: %d" % ScoreManager.get_score()
 
 func _on_new_game_pressed():
 	reset_game()
 	game_active = true
-	ScoreManager.reset_score()
-	$RingSpawner.ring_spawn_timer = 0
-	$MineSpawner.mine_spawn_timer = 0
-	$UI/NewGameButton.visible = false
-	$UI/Score.visible = true
 	$BackgroundMusic.volume_db = +5  # raise background music volume by 5dB
 	$GameStartFx.play() # play game start fx
 
 func _on_game_over():
-	end_game()
-	$BackgroundMusic.volume_db = -10  # raise background music volume by 10dB
-	$GameOverFx.play() # play game over fx
-	
-func end_game():
+	# set the game active flag
 	game_active = false
+	
+	# set music volume and play game over sound fx
+	$BackgroundMusic.volume_db = -10
+	$GameOverFx.play()
+	
+	# update UI
+	$UI/MinesHit.text = "Mines Hit: %d" % ScoreManager.get_mines_hit()
+	$UI/FinalScore.text = "Final Score: %d" % ScoreManager.get_score()
+	
+	# set UI element visibility
 	$UI/NewGameButton.visible = true
 	$UI/Score.visible = false
+	$UI/GameOver.visible = true
+	$UI/MinesHit.visible = true
+	$UI/FinalScore.visible = true
 
 func is_game_active() -> bool:
 	return game_active
@@ -197,9 +198,22 @@ func reset_game():
 	for ring in get_tree().get_nodes_in_group("mines"):
 		ring.queue_free()
 	
-	# reset score
-	ScoreManager.reset_score()
-	$UI/Score.text = "Score: 0"
-	
 	# reset basket health
 	basket.reset_health()
+	
+	# reset score and mines hit
+	ScoreManager.reset_score()
+	$UI/Score.text = "Score: 0"
+	$UI/FinalScore.text = "Final Score: 0"
+	$UI/Score.visible = true
+	$UI/FinalScore.visible = false
+	
+	ScoreManager.reset_mines_hit()
+	$UI/MinesHit.text = "Mines Hit: 0"
+	$UI/MinesHit.visible = false
+
+	$UI/GameOver.visible = false
+	$UI/NewGameButton.visible = false
+	
+	$RingSpawner.ring_spawn_timer = 0
+	$MineSpawner.mine_spawn_timer = 0
