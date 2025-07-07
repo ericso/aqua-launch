@@ -108,6 +108,9 @@ func emit_swipe_impulse(origin: Vector2, direction: Vector2):
 
 	var results = space_state.intersect_shape(params, 32)
 
+	# sound fx
+	$WaterSplashFx.play()
+	
 	for hit in results:
 		var body = hit.collider
 		if body is RigidBody2D:
